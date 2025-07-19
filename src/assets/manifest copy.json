@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "GekkoPad",
+  "description": "A floating sticky notepad for any website. Jot ideas, save per site, and stay in flow.",
+  "version": "1.0.0",
+  "icons": {
+    "32": "icons/icon32.png"
+  },
+  "permissions": ["storage", "scripting", "activeTab"],
+  "action": {
+    "default_title": "Toggle GekkoPad",
+    "default_icon": {
+      "32": "icons/icon32.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["style.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "host_permissions": ["<all_urls>"]
+}
