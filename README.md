@@ -82,8 +82,6 @@ This project is licensed under the [Apache License 2.0](LICENSE).
 For questions, suggestions, or bug reports, please open an issue on GitHub.
 If you're using zapi internally or in a project and would like to collaborate, feel free to reach out.
 
----
-
 ## Disclaimer
 
 **zapi** was built to make API testing faster, simpler, and more private. The extension is designed for personal and professional use. 
