@@ -84,5 +84,7 @@ If you're using zapi internally or in a project and would like to collaborate, f
 
 ---
 
-**zapi** was built to make API testing faster, simpler, and more private.
-If you’ve ever wished for a "command palette" for API calls — try zapi.
+## Disclaimer
+
+**zapi** was built to make API testing faster, simpler, and more private. The extension is designed for personal and professional use. 
+Use responsibly when interacting with protected or private APIs.
