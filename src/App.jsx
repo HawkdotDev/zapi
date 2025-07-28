@@ -54,11 +54,27 @@ function App() {
     theme: false, // false = dark mode (default), true = light mode
   });
 
+  const [apiType, setApiType] = useState("rest"); // rest, graphql, websockets
+
   const [request, setRequest] = useState({
     method: "GET",
     url: "https://jsonplaceholder.typicode.com/posts/1",
     headers: [{ key: "Content-Type", value: "application/json" }],
     body: "",
+  });
+
+  const [graphqlRequest, setGraphqlRequest] = useState({
+    url: "https://api.github.com/graphql",
+    headers: [{ key: "Authorization", value: "Bearer YOUR_TOKEN" }],
+    query: `query {
+  viewer {
+    login
+    name
+    email
+  }
+}`,
+    variables: "{}",
+    operationName: "",
   });
 
   const [activeTab, setActiveTab] = useState("headers");
@@ -77,29 +93,63 @@ function App() {
   const handleSendRequest = async () => {
     setLoading(true);
     try {
-      const headers = {};
-      request.headers.forEach((h) => {
-        if (h.key && h.value) headers[h.key] = h.value;
-      });
+      if (apiType === "rest") {
+        const headers = {};
+        request.headers.forEach((h) => {
+          if (h.key && h.value) headers[h.key] = h.value;
+        });
 
-      const options = {
-        method: request.method,
-        headers,
-      };
+        const options = {
+          method: request.method,
+          headers,
+        };
 
-      if (request.method !== "GET" && request.body) {
-        options.body = request.body;
+        if (request.method !== "GET" && request.body) {
+          options.body = request.body;
+        }
+
+        const res = await fetch(request.url, options);
+        const data = await res.text();
+
+        setResponse({
+          status: res.status,
+          statusText: res.statusText,
+          headers: Object.fromEntries(res.headers),
+          data: data,
+        });
+      } else if (apiType === "graphql") {
+        const headers = {};
+        graphqlRequest.headers.forEach((h) => {
+          if (h.key && h.value) headers[h.key] = h.value;
+        });
+
+        const body = {
+          query: graphqlRequest.query,
+          variables: graphqlRequest.variables ? JSON.parse(graphqlRequest.variables) : {},
+        };
+
+        if (graphqlRequest.operationName) {
+          body.operationName = graphqlRequest.operationName;
+        }
+
+        const res = await fetch(graphqlRequest.url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            ...headers,
+          },
+          body: JSON.stringify(body),
+        });
+
+        const data = await res.text();
+
+        setResponse({
+          status: res.status,
+          statusText: res.statusText,
+          headers: Object.fromEntries(res.headers),
+          data: data,
+        });
       }
-
-      const res = await fetch(request.url, options);
-      const data = await res.text();
-
-      setResponse({
-        status: res.status,
-        statusText: res.statusText,
-        headers: Object.fromEntries(res.headers),
-        data: data,
-      });
     } catch (error) {
       setResponse({
         status: 0,
@@ -113,26 +163,49 @@ function App() {
   };
 
   const addHeader = () => {
-    setRequest((prev) => ({
-      ...prev,
-      headers: [...prev.headers, { key: "", value: "" }],
-    }));
+    if (apiType === "rest") {
+      setRequest((prev) => ({
+        ...prev,
+        headers: [...prev.headers, { key: "", value: "" }],
+      }));
+    } else if (apiType === "graphql") {
+      setGraphqlRequest((prev) => ({
+        ...prev,
+        headers: [...prev.headers, { key: "", value: "" }],
+      }));
+    }
   };
 
   const updateHeader = (index, field, value) => {
-    setRequest((prev) => ({
-      ...prev,
-      headers: prev.headers.map((h, i) =>
-        i === index ? { ...h, [field]: value } : h
-      ),
-    }));
+    if (apiType === "rest") {
+      setRequest((prev) => ({
+        ...prev,
+        headers: prev.headers.map((h, i) =>
+          i === index ? { ...h, [field]: value } : h
+        ),
+      }));
+    } else if (apiType === "graphql") {
+      setGraphqlRequest((prev) => ({
+        ...prev,
+        headers: prev.headers.map((h, i) =>
+          i === index ? { ...h, [field]: value } : h
+        ),
+      }));
+    }
   };
 
   const removeHeader = (index) => {
-    setRequest((prev) => ({
-      ...prev,
-      headers: prev.headers.filter((_, i) => i !== index),
-    }));
+    if (apiType === "rest") {
+      setRequest((prev) => ({
+        ...prev,
+        headers: prev.headers.filter((_, i) => i !== index),
+      }));
+    } else if (apiType === "graphql") {
+      setGraphqlRequest((prev) => ({
+        ...prev,
+        headers: prev.headers.filter((_, i) => i !== index),
+      }));
+    }
   };
 
   const getMethodColor = (method) => {
@@ -155,6 +228,8 @@ function App() {
     };
     return colors[method] || colors.GET;
   };
+
+  const currentHeaders = apiType === "rest" ? request.headers : graphqlRequest.headers;
 
   return (
     <div
@@ -205,112 +280,230 @@ function App() {
         </div>
       </header>
 
+      {/* API Type Selection Strip */}
+      <div
+        className={`transition-all duration-500 w-full bg-amber-50 ${
+          isDark ? "border-white/10" : "border-gray-200/50"
+        }`}
+      >
+        <div
+          className={`flex px-1 ${
+            isDark ? "bg-[#1f1f1f]" : "bg-gray-100"
+          }`}
+        >
+          {[
+            { key: "rest", label: "REST API", icon: "" },
+            { key: "graphql", label: "GraphQL", icon: "" },
+            { key: "websocket", label: "WebSocket", icon: "", comingSoon: true },
+          ].map(({ key, label, icon, comingSoon }) => (
+            <button
+              key={key}
+              onClick={() => !comingSoon && setApiType(key)}
+              disabled={comingSoon}
+              className={`flex-1 px-3 py-2 text-sm border-x border-zinc-700 font-semibold rounded-sm transition-all duration-300 relative overflow-hidden flex items-center justify-center space-x-2 ${
+                apiType === key
+                  ? "text-black bg-orange-400 shadow-lg"
+                  : comingSoon
+                  ? isDark
+                    ? "text-gray-600 cursor-not-allowed"
+                    : "text-gray-400 cursor-not-allowed"
+                  : isDark
+                  ? "text-gray-400 hover:text-white hover:bg-[#3b3b3b]"
+                  : "text-gray-600 hover:text-gray-900 hover:bg-white"
+              }`}
+            >
+              <span className="text-base">{icon}</span>
+              <span>{label}</span>
+              {comingSoon && (
+                <span className={`text-xs px-2 py-1 rounded-full ${
+                  isDark ? "bg-gray-700 text-gray-400" : "bg-gray-200 text-gray-500"
+                }`}>
+                  Soon
+                </span>
+              )}
+              {apiType === key && (
+                <div className="absolute inset-0 bg-white/20 rounded-lg animate-pulse" />
+              )}
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* Request Section */}
       <div
         className={`p-6 border-b transition-all duration-500 ${
           isDark ? "border-white/10" : "border-gray-200/50"
         }`}
       >
-        {/* Method and URL */}
-        <div className="flex gap-3 mb-6">
-          <div className="relative">
-            <select
-              value={request.method}
-              onChange={(e) =>
-                setRequest((prev) => ({ ...prev, method: e.target.value }))
-              }
-              className={`px-4 py-3 rounded-xl border font-bold text-sm transition-all duration-300 hover:scale-105 focus:scale-105 outline-none appearance-none pr-10 ${getMethodColor(
-                request.method
-              )} ${isDark ? "backdrop-blur-sm" : "backdrop-blur-sm"}`}
-            >
-              <option value="GET">GET</option>
-              <option value="POST">POST</option>
-              <option value="PUT">PUT</option>
-              <option value="DELETE">DELETE</option>
-              <option value="PATCH">PATCH</option>
-            </select>
-            <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-              <svg
-                className={`w-4 h-4 ${
-                  isDark ? "text-gray-400" : "text-gray-600"
-                }`}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
-            </div>
-          </div>
-
-          <div className="flex-1 relative group">
-            <input
-              type="text"
-              value={request.url}
-              onChange={(e) =>
-                setRequest((prev) => ({ ...prev, url: e.target.value }))
-              }
-              placeholder="Enter your API endpoint..."
-              className={`w-full px-4 py-3 rounded-xl border font-mono text-sm transition-all duration-300 outline-none focus:scale-[1.02] ${
-                isDark
-                  ? "bg-[#1f1f1f] border-white/10 text-white placeholder-gray-400 focus:border-yellow-400/50 focus:bg-[#252525]"
-                  : "bg-white border-gray-200/50 text-[#141414] placeholder-gray-500 focus:border-yellow-400/50 focus:bg-gray-50"
-              }`}
-            />
-            <div className="absolute inset-0 rounded-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 pointer-events-none bg-yellow-400/5" />
-          </div>
-
-          <button
-            onClick={handleSendRequest}
-            disabled={loading}
-            className="px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:hover:scale-100 shadow-lg bg-yellow-400 text-black hover:bg-emerald-400 shadow-yellow-500/25"
-          >
-            {loading ? (
-              <div className="flex items-center space-x-2">
-                <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                <span>Sending</span>
+        {apiType === "rest" && (
+          <>
+            {/* Method and URL */}
+            <div className="flex gap-3 mb-6">
+              <div className="relative">
+                <select
+                  value={request.method}
+                  onChange={(e) =>
+                    setRequest((prev) => ({ ...prev, method: e.target.value }))
+                  }
+                  className={`px-4 py-3 rounded-xl border font-bold text-sm transition-all duration-300 hover:scale-105 focus:scale-105 outline-none appearance-none pr-10 ${getMethodColor(
+                    request.method
+                  )} ${isDark ? "backdrop-blur-sm" : "backdrop-blur-sm"}`}
+                >
+                  <option value="GET">GET</option>
+                  <option value="POST">POST</option>
+                  <option value="PUT">PUT</option>
+                  <option value="DELETE">DELETE</option>
+                  <option value="PATCH">PATCH</option>
+                </select>
+                <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                  <svg
+                    className={`w-4 h-4 ${
+                      isDark ? "text-gray-400" : "text-gray-600"
+                    }`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </div>
               </div>
-            ) : (
-              "Send ↗️"
-            )}
-          </button>
-        </div>
 
-        {/* Tabs */}
-        <div
-          className={`flex rounded-xl p-1 mb-6 ${
-            isDark ? "bg-[#1f1f1f]" : "bg-gray-100"
-          }`}
-        >
-          {["headers", "body"].map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`flex-1 px-4 py-2 text-sm font-semibold capitalize rounded-lg transition-all duration-300 relative overflow-hidden ${
-                activeTab === tab
-                  ? "text-black bg-yellow-400 shadow-lg"
-                  : isDark
-                  ? "text-gray-400 hover:text-white hover:bg-[#252525]"
-                  : "text-gray-600 hover:text-gray-900 hover:bg-white"
+              <div className="flex-1 relative group">
+                <input
+                  type="text"
+                  value={request.url}
+                  onChange={(e) =>
+                    setRequest((prev) => ({ ...prev, url: e.target.value }))
+                  }
+                  placeholder="Enter your API endpoint..."
+                  className={`w-full px-4 py-3 rounded-xl border font-mono text-sm transition-all duration-300 outline-none focus:scale-[1.02] ${
+                    isDark
+                      ? "bg-[#1f1f1f] border-white/10 text-white placeholder-gray-400 focus:border-yellow-400/50 focus:bg-[#252525]"
+                      : "bg-white border-gray-200/50 text-[#141414] placeholder-gray-500 focus:border-yellow-400/50 focus:bg-gray-50"
+                  }`}
+                />
+                <div className="absolute inset-0 rounded-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 pointer-events-none bg-yellow-400/5" />
+              </div>
+
+              <button
+                onClick={handleSendRequest}
+                disabled={loading}
+                className="px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:hover:scale-100 shadow-lg bg-yellow-400 text-black hover:bg-emerald-400 shadow-yellow-500/25"
+              >
+                {loading ? (
+                  <div className="flex items-center space-x-2">
+                    <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                    <span>Sending</span>
+                  </div>
+                ) : (
+                  "Send ↗️"
+                )}
+              </button>
+            </div>
+
+            {/* Tabs */}
+            <div
+              className={`flex rounded-xl p-1 mb-6 ${
+                isDark ? "bg-[#1f1f1f]" : "bg-gray-100"
               }`}
             >
-              {tab}
-              {activeTab === tab && (
-                <div className="absolute inset-0 bg-white/20 rounded-lg animate-pulse" />
-              )}
-            </button>
-          ))}
-        </div>
+              {["headers", "body"].map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  className={`flex-1 px-4 py-2 text-sm font-semibold capitalize rounded-lg transition-all duration-300 relative overflow-hidden ${
+                    activeTab === tab
+                      ? "text-black bg-yellow-400 shadow-lg"
+                      : isDark
+                      ? "text-gray-400 hover:text-white hover:bg-[#252525]"
+                      : "text-gray-600 hover:text-gray-900 hover:bg-white"
+                  }`}
+                >
+                  {tab}
+                  {activeTab === tab && (
+                    <div className="absolute inset-0 bg-white/20 rounded-lg animate-pulse" />
+                  )}
+                </button>
+              ))}
+            </div>
+          </>
+        )}
+
+        {apiType === "graphql" && (
+          <>
+            {/* GraphQL URL */}
+            <div className="flex gap-3 mb-6">
+              <div className="flex-1 relative group">
+                <input
+                  type="text"
+                  value={graphqlRequest.url}
+                  onChange={(e) =>
+                    setGraphqlRequest((prev) => ({ ...prev, url: e.target.value }))
+                  }
+                  placeholder="Enter your GraphQL endpoint..."
+                  className={`w-full px-4 py-3 rounded-xl border font-mono text-sm transition-all duration-300 outline-none focus:scale-[1.02] ${
+                    isDark
+                      ? "bg-[#1f1f1f] border-white/10 text-white placeholder-gray-400 focus:border-yellow-400/50 focus:bg-[#252525]"
+                      : "bg-white border-gray-200/50 text-[#141414] placeholder-gray-500 focus:border-yellow-400/50 focus:bg-gray-50"
+                  }`}
+                />
+                <div className="absolute inset-0 rounded-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 pointer-events-none bg-yellow-400/5" />
+              </div>
+
+              <button
+                onClick={handleSendRequest}
+                disabled={loading}
+                className="px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:hover:scale-100 shadow-lg bg-yellow-400 text-black hover:bg-emerald-400 shadow-yellow-500/25"
+              >
+                {loading ? (
+                  <div className="flex items-center space-x-2">
+                    <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                    <span>Sending</span>
+                  </div>
+                ) : (
+                  "Send ↗️"
+                )}
+              </button>
+            </div>
+
+            {/* GraphQL Tabs */}
+            <div
+              className={`flex rounded-xl p-1 mb-6 ${
+                isDark ? "bg-[#1f1f1f]" : "bg-gray-100"
+              }`}
+            >
+              {["query", "variables", "headers"].map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  className={`flex-1 px-4 py-2 text-sm font-semibold capitalize rounded-lg transition-all duration-300 relative overflow-hidden ${
+                    activeTab === tab
+                      ? "text-black bg-yellow-400 shadow-lg"
+                      : isDark
+                      ? "text-gray-400 hover:text-white hover:bg-[#252525]"
+                      : "text-gray-600 hover:text-gray-900 hover:bg-white"
+                  }`}
+                >
+                  {tab}
+                  {activeTab === tab && (
+                    <div className="absolute inset-0 bg-white/20 rounded-lg animate-pulse" />
+                  )}
+                </button>
+              ))}
+            </div>
+          </>
+        )}
 
         {/* Tab Content */}
         {activeTab === "headers" && (
           <div className="space-y-3">
-            {request.headers.map((header, index) => (
+            {currentHeaders.map((header, index) => (
               <div key={index} className="flex gap-3 group">
                 <input
                   type="text"
@@ -336,7 +529,7 @@ function App() {
                 />
                 <button
                   onClick={() => removeHeader(index)}
-                  className={`px-3 py-2 rounded-lg transition-all duration-300 hover:scale-110 opacity-0 group-hover:opacity-100 ${
+                  className={`px-3 py-2 rounded-lg transition-all duration-300 hover:scale-110 opacity-30 group-hover:opacity-100 ${
                     isDark
                       ? "text-red-400 hover:text-red-300 hover:bg-red-500/10"
                       : "text-red-500 hover:text-red-400 hover:bg-red-100"
@@ -360,7 +553,7 @@ function App() {
           </div>
         )}
 
-        {activeTab === "body" && (
+        {activeTab === "body" && apiType === "rest" && (
           <div className="relative group">
             <textarea
               value={request.body}
@@ -369,6 +562,61 @@ function App() {
               }
               placeholder="Enter request body (JSON, XML, etc.)"
               className={`w-full h-24 px-4 py-3 rounded-xl border font-mono text-sm transition-all duration-300 outline-none focus:scale-[1.02] resize-none ${
+                isDark
+                  ? "bg-[#1f1f1f] border-white/10 text-white placeholder-gray-400 focus:border-yellow-400/50 focus:bg-[#252525]"
+                  : "bg-white border-gray-200/50 text-[#141414] placeholder-gray-500 focus:border-yellow-400/50 focus:bg-gray-50"
+              }`}
+            />
+            <div className="absolute inset-0 rounded-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 pointer-events-none bg-yellow-400/5" />
+          </div>
+        )}
+
+        {activeTab === "query" && apiType === "graphql" && (
+          <div className="space-y-4">
+            <div className="relative group">
+              <textarea
+                value={graphqlRequest.query}
+                onChange={(e) =>
+                  setGraphqlRequest((prev) => ({ ...prev, query: e.target.value }))
+                }
+                placeholder="Enter your GraphQL query..."
+                className={`w-full h-40 px-4 py-3 rounded-xl border font-mono text-sm transition-all duration-300 outline-none focus:scale-[1.02] resize-none ${
+                  isDark
+                    ? "bg-[#1f1f1f] border-white/10 text-white placeholder-gray-400 focus:border-yellow-400/50 focus:bg-[#252525]"
+                    : "bg-white border-gray-200/50 text-[#141414] placeholder-gray-500 focus:border-yellow-400/50 focus:bg-gray-50"
+                }`}
+              />
+              <div className="absolute inset-0 rounded-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 pointer-events-none bg-yellow-400/5" />
+            </div>
+            
+            <div className="relative group">
+              <input
+                type="text"
+                value={graphqlRequest.operationName}
+                onChange={(e) =>
+                  setGraphqlRequest((prev) => ({ ...prev, operationName: e.target.value }))
+                }
+                placeholder="Operation Name (optional)"
+                className={`w-full px-4 py-3 rounded-xl border font-mono text-sm transition-all duration-300 outline-none focus:scale-[1.02] ${
+                  isDark
+                    ? "bg-[#1f1f1f] border-white/10 text-white placeholder-gray-400 focus:border-yellow-400/50 focus:bg-[#252525]"
+                    : "bg-white border-gray-200/50 text-[#141414] placeholder-gray-500 focus:border-yellow-400/50 focus:bg-gray-50"
+                }`}
+              />
+              <div className="absolute inset-0 rounded-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 pointer-events-none bg-yellow-400/5" />
+            </div>
+          </div>
+        )}
+
+        {activeTab === "variables" && apiType === "graphql" && (
+          <div className="relative group">
+            <textarea
+              value={graphqlRequest.variables}
+              onChange={(e) =>
+                setGraphqlRequest((prev) => ({ ...prev, variables: e.target.value }))
+              }
+              placeholder="Enter GraphQL variables (JSON format)..."
+              className={`w-full h-32 px-4 py-3 rounded-xl border font-mono text-sm transition-all duration-300 outline-none focus:scale-[1.02] resize-none ${
                 isDark
                   ? "bg-[#1f1f1f] border-white/10 text-white placeholder-gray-400 focus:border-yellow-400/50 focus:bg-[#252525]"
                   : "bg-white border-gray-200/50 text-[#141414] placeholder-gray-500 focus:border-yellow-400/50 focus:bg-gray-50"
@@ -453,11 +701,17 @@ function App() {
                 isDark ? "text-white/20" : "text-gray-300"
               }`}
             >
-              🚀
+              {apiType === "rest" ? "🚀" : apiType === "graphql" ? "⚡" : "🔌"}
             </div>
-            <p className="font-medium">Ready to launch your request!</p>
+            <p className="font-medium">
+              {apiType === "websockets" 
+                ? "WebSocket support coming soon!" 
+                : `Ready to launch your ${apiType.toUpperCase()} request!`}
+            </p>
             <p className="text-sm mt-1">
-              Hit that Send button to see magic happen ✨
+              {apiType === "websockets" 
+                ? "Stay tuned for real-time communication features 🔥" 
+                : "Hit that Send button to see magic happen ✨"}
             </p>
           </div>
         )}

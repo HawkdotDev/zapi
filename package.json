@@ -1,6 +1,6 @@
 {
   "name": "zapi",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Zapi is a lightweight Chrome extension that lets you send API requests instantly from a popup interface.",
   "homepage": "https://github.com/HawkdotDev/zapi#readme",
   "license": "Apache-2.0",

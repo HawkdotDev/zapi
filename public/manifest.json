@@ -1,12 +1,13 @@
 {
   "manifest_version": 3,
   "name": "zapi",
-  "description": "Zapi is a lightweight Chrome extension that lets you send API requests instantly from a popup interface.",
+  "description": "Zapi is a lightweight extension that lets you send API requests instantly from a popup interface.",
   "version": "0.1.0",
   "icons": {
     "32": "icons/icon32.png"
   },
-  "permissions": ["storage", "scripting", "activeTab"],
+  "permissions": ["storage", "activeTab"],
+  "host_permissions": ["<all_urls>"],
   "action": {
     "default_popup": "index.html",
     "default_title": "Toggle zapi",
@@ -14,5 +15,10 @@
       "32": "icons/icon32.png"
     }
   },
-  "host_permissions": ["<all_urls>"]
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "zapi@HawkdotDev.com",
+      "strict_min_version": "109.0"
+    }
+  }
 }
