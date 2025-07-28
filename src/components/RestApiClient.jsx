@@ -147,7 +147,7 @@ const RestApiClient = ({ isDark, loading, onSendRequest }) => {
   return (
     <>
       {/* Method and URL */}
-      <div className="flex gap-3 mb-6">
+      <div className="flex gap-3 mb-4">
         <div className="relative">
           <select
             value={request.method}
@@ -219,7 +219,7 @@ const RestApiClient = ({ isDark, loading, onSendRequest }) => {
       {/* Final URL Preview */}
       {request.params.some((p) => p.key.trim() && p.value.trim()) && (
         <div
-          className={`mb-4 p-3 rounded-lg border ${
+          className={`mb-3.5 p-3 rounded-lg border ${
             isDark
               ? "bg-[#1a1a1a] border-white/10 text-gray-300"
               : "bg-gray-50 border-gray-200 text-gray-600"
@@ -235,7 +235,7 @@ const RestApiClient = ({ isDark, loading, onSendRequest }) => {
       )}
 
       {/* Tabs and Auth Dropdown */}
-      <div className="flex gap-3 mb-6">
+      <div className="flex gap-3 mb-4">
         <div
           className={`flex rounded-xl p-1 flex-1 ${
             isDark ? "bg-[#1f1f1f]" : "bg-gray-100"
@@ -311,7 +311,6 @@ const RestApiClient = ({ isDark, loading, onSendRequest }) => {
                     : "text-gray-900 hover:bg-gray-50 hover:text-indigo-600"
                 }`}
               >
-                <span>🚫</span>
                 <span>No Auth</span>
               </button>
 
@@ -320,7 +319,6 @@ const RestApiClient = ({ isDark, loading, onSendRequest }) => {
                   isDark ? "text-gray-500" : "text-gray-400"
                 }`}
               >
-                <span>⏳</span>
                 <span>Coming Soon</span>
               </div>
 
@@ -336,7 +334,6 @@ const RestApiClient = ({ isDark, loading, onSendRequest }) => {
                     : "text-gray-900 hover:bg-gray-50 hover:text-indigo-600"
                 }`}
               >
-                <span>🔑</span>
                 <span>Bearer Token</span>
               </button>
               <button
@@ -351,7 +348,6 @@ const RestApiClient = ({ isDark, loading, onSendRequest }) => {
                     : "text-gray-900 hover:bg-gray-50 hover:text-indigo-600"
                 }`}
               >
-                <span>👤</span>
                 <span>Basic Auth</span>
               </button>
               <button
@@ -366,7 +362,6 @@ const RestApiClient = ({ isDark, loading, onSendRequest }) => {
                     : "text-gray-900 hover:bg-gray-50 hover:text-indigo-600"
                 }`}
               >
-                <span>🗝️</span>
                 <span>API Key</span>
               </button>
             </div>
@@ -384,7 +379,7 @@ const RestApiClient = ({ isDark, loading, onSendRequest }) => {
 
       {/* Auth Configuration (shows when auth type is not "none") */}
       {request.auth.type !== "none" && (
-        <div className="mb-6">
+        <div className="mb-4">
           <div
             className={`p-4 rounded-lg border ${
               isDark

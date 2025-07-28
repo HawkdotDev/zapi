@@ -212,7 +212,6 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
                     : "text-gray-900 hover:bg-gray-50 hover:text-indigo-600"
                 }`}
               >
-                <span>🚫</span>
                 <span>No Auth</span>
               </button>
 
@@ -221,7 +220,6 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
                   isDark ? "text-gray-500" : "text-gray-400"
                 }`}
               >
-                <span>⏳</span>
                 <span>Coming Soon</span>
               </div>
 
@@ -237,7 +235,6 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
                     : "text-gray-900 hover:bg-gray-50 hover:text-indigo-600"
                 }`}
               >
-                <span>🔑</span>
                 <span>Bearer Token</span>
               </button>
               <button
@@ -252,7 +249,6 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
                     : "text-gray-900 hover:bg-gray-50 hover:text-indigo-600"
                 }`}
               >
-                <span>👤</span>
                 <span>Basic Auth</span>
               </button>
               <button
@@ -267,7 +263,6 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
                     : "text-gray-900 hover:bg-gray-50 hover:text-indigo-600"
                 }`}
               >
-                <span>🗝️</span>
                 <span>API Key</span>
               </button>
             </div>
