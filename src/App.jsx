@@ -174,7 +174,7 @@ function App() {
     >
       <header className="backdrop-blur-xl transition-all duration-500">
         <div className="flex justify-between items-center px-6 py-2">
-          <p className="text-xl font-bold">zapi</p>
+          <p className="text-2xl font-bold">zapi</p>
           <nav className="flex space-x-2 items-center">
             {[
               { key: "theme", icon: ThemeIcon, active: activeStates.theme },
