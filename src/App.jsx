@@ -150,7 +150,7 @@ function App() {
       }`}
     >
       <header className="backdrop-blur-xl transition-all duration-500">
-        <div className="flex justify-between items-center px-3 py-2">
+        <div className="flex justify-between items-center px-6 py-2">
           <p className="text-xl font-bold">zapi</p>
           <nav className="flex space-x-2 items-center">
             {[
@@ -188,7 +188,7 @@ function App() {
 
       {/* API Type Selection Strip */}
       <div
-        className={`transition-all duration-500 w-full px-2 ${
+        className={`transition-all duration-500 w-full px-5 ${
           isDark ? "border-white/10" : "border-gray-200/50"
         }`}
       >
@@ -209,7 +209,7 @@ function App() {
               disabled={comingSoon}
               className={`flex-1 px-3 py-2 text-sm border border-zinc-700/40 font-semibold rounded-sm transition-all duration-300 relative overflow-hidden flex items-center justify-center space-x-2 ${
                 apiType === key
-                  ? "text-black bg-orange-400 shadow-lg"
+                  ? "text-black bg-yellow-400 shadow-lg"
                   : comingSoon
                   ? isDark
                     ? "text-gray-600 cursor-not-allowed"

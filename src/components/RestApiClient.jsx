@@ -556,9 +556,9 @@ const RestApiClient = ({ isDark, loading, onSendRequest }) => {
               />
               <button
                 onClick={() => removeParam(index)}
-                className={`px-3 py-2 rounded-lg transition-all duration-300 hover:scale-110 opacity-30 group-hover:opacity-100 ${
+                className={`px-3 py-1 rounded-lg transition-all duration-300 hover:scale-110 opacity-30 group-hover:opacity-100 ${
                   isDark
-                    ? "text-red-400 hover:text-red-300 hover:bg-red-500/10"
+                    ? "text-red-400 hover:text-red-300 hover:bg-red-500/80"
                     : "text-red-500 hover:text-red-400 hover:bg-red-100"
                 }`}
               >
