@@ -68,7 +68,7 @@ function App() {
     followRedirects: true,
     validateSSL: true,
     maxRetries: 3,
-    theme: 'auto'
+    theme: "auto",
   });
 
   const toggleState = (key) => {
@@ -178,30 +178,37 @@ function App() {
           <nav className="flex space-x-2 items-center">
             {[
               { key: "theme", icon: ThemeIcon, active: activeStates.theme },
-              { key: "settings", icon: SettingsIcon, active: false, onClick: handleSettingsClick },
+              {
+                key: "settings",
+                icon: SettingsIcon,
+                active: false,
+                onClick: handleSettingsClick,
+              },
             ].map(({ key, icon, active, onClick }) => (
               <button
                 key={key}
-                onClick={onClick || (() => key !== "settings" && toggleState(key))}
+                onClick={
+                  onClick || (() => key !== "settings" && toggleState(key))
+                }
                 className={`group relative p-3 rounded-xl border transition-all duration-300 hover:scale-110 hover:rotate-3 ${
                   isDark
-                    ? "bg-[#1f1f1f] border-white/10 hover:bg-[#252525] hover:border-yellow-400/50"
-                    : "bg-white border-gray-200/50 hover:bg-gray-50 hover:border-yellow-400/50"
-                } ${active ? "border-yellow-400/70 bg-yellow-400/10" : ""}`}
+                    ? "bg-[#1f1f1f] border-white/10 hover:bg-[#252525] hover:border-indigo-400/50"
+                    : "bg-white border-gray-200/50 hover:bg-gray-50 hover:border-indigo-400/50"
+                } ${active ? "border-indigo-400/70 bg-indigo-400/10" : ""}`}
               >
                 {icon &&
                   icon({
                     isActive: active,
                     className: `transition-all duration-300 ${
                       active
-                        ? "text-yellow-400"
+                        ? "text-indigo-400"
                         : isDark
-                        ? "text-gray-300 group-hover:text-yellow-400"
-                        : "text-gray-600 group-hover:text-yellow-400"
+                        ? "text-gray-300 group-hover:text-indigo-400"
+                        : "text-gray-600 group-hover:text-indigo-400"
                     }`,
                   })}
                 {active && (
-                  <div className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-yellow-400 animate-pulse" />
+                  <div className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-indigo-400 animate-pulse" />
                 )}
               </button>
             ))}
@@ -230,9 +237,9 @@ function App() {
               key={key}
               onClick={() => !comingSoon && setApiType(key)}
               disabled={comingSoon}
-              className={`flex-1 px-3 py-2 text-sm border border-zinc-700/40 font-semibold rounded-sm transition-all duration-300 relative overflow-hidden flex items-center justify-center space-x-2 ${
+              className={`flex-1 px-3 py-2 text-sm border border-zinc-700/40 font-semibold rounded-lg transition-all duration-300 relative overflow-hidden flex items-center justify-center space-x-2 ${
                 apiType === key
-                  ? "text-black bg-yellow-400 shadow-lg"
+                  ? "text-black bg-indigo-400 shadow-lg"
                   : comingSoon
                   ? isDark
                     ? "text-gray-600 cursor-not-allowed"
@@ -304,7 +311,7 @@ function App() {
                     ? "text-emerald-700 bg-emerald-100"
                     : response.status >= 400
                     ? "text-red-700 bg-red-100"
-                    : "text-yellow-700 bg-yellow-100"
+                    : "text-indigo-700 bg-indigo-100"
                 }`}
               >
                 {`Status: ${response.status}`}
@@ -316,7 +323,7 @@ function App() {
                       ? "text-emerald-700 bg-emerald-100"
                       : response.status >= 400
                       ? "text-red-700 bg-red-100"
-                      : "text-yellow-700 bg-yellow-100"
+                      : "text-indigo-700 bg-indigo-100"
                   }`}
                 >
                   {`Status Text: ${
@@ -344,7 +351,7 @@ function App() {
               >
                 {typeof response.data === "string" &&
                 (response.data.startsWith("{") || response.data.startsWith("["))
-                  ? settings.autoFormat 
+                  ? settings.autoFormat
                     ? JSON.stringify(JSON.parse(response.data), null, 2)
                     : response.data
                   : response.data}

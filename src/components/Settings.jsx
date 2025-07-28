@@ -35,7 +35,7 @@ const Settings = ({ isOpen, onClose, isDark, settings, onSettingsChange }) => {
       followRedirects: true,
       validateSSL: true,
       maxRetries: 3,
-      theme: 'auto'
+      theme: "auto",
     };
     setLocalSettings(defaultSettings);
     onSettingsChange(defaultSettings);
@@ -46,26 +46,30 @@ const Settings = ({ isOpen, onClose, isDark, settings, onSettingsChange }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       {/* Backdrop */}
-      <div 
+      <div
         className="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300"
         onClick={onClose}
       />
-      
+
       {/* Modal */}
-      <div 
+      <div
         className={`relative w-full max-w-2xl mx-4 rounded-2xl border shadow-2xl transition-all duration-300 transform ${
-          isDark 
-            ? "bg-[#141414] border-white/10" 
+          isDark
+            ? "bg-[#141414] border-white/10"
             : "bg-white border-gray-200/50"
         }`}
       >
         {/* Header */}
-        <div className={`flex items-center justify-between p-6 border-b ${
-          isDark ? "border-white/10" : "border-gray-200/50"
-        }`}>
-          <h2 className={`text-xl font-bold ${
-            isDark ? "text-white" : "text-[#141414]"
-          }`}>
+        <div
+          className={`flex items-center justify-between p-6 border-b ${
+            isDark ? "border-white/10" : "border-gray-200/50"
+          }`}
+        >
+          <h2
+            className={`text-xl font-bold ${
+              isDark ? "text-white" : "text-[#141414]"
+            }`}
+          >
             Settings
           </h2>
           <button
@@ -76,11 +80,13 @@ const Settings = ({ isOpen, onClose, isDark, settings, onSettingsChange }) => {
                 : "bg-white border-gray-200/50 hover:bg-gray-50 hover:border-red-400/50"
             }`}
           >
-            <CloseIcon className={`transition-all duration-300 ${
-              isDark
-                ? "text-gray-300 hover:text-red-400"
-                : "text-gray-600 hover:text-red-400"
-            }`} />
+            <CloseIcon
+              className={`transition-all duration-300 ${
+                isDark
+                  ? "text-gray-300 hover:text-red-400"
+                  : "text-gray-600 hover:text-red-400"
+              }`}
+            />
           </button>
         </div>
 
@@ -88,28 +94,34 @@ const Settings = ({ isOpen, onClose, isDark, settings, onSettingsChange }) => {
         <div className="p-6 space-y-6 max-h-96 overflow-y-auto custom-scrollbar">
           {/* Request Settings */}
           <div className="space-y-4">
-            <h3 className={`text-lg font-semibold ${
-              isDark ? "text-white" : "text-[#141414]"
-            }`}>
+            <h3
+              className={`text-lg font-semibold ${
+                isDark ? "text-white" : "text-[#141414]"
+              }`}
+            >
               Request Settings
             </h3>
-            
+
             {/* Timeout */}
             <div className="space-y-2">
-              <label className={`block text-sm font-medium ${
-                isDark ? "text-gray-300" : "text-gray-700"
-              }`}>
+              <label
+                className={`block text-sm font-medium ${
+                  isDark ? "text-gray-300" : "text-gray-700"
+                }`}
+              >
                 Request Timeout (ms)
               </label>
               <input
                 type="number"
                 value={localSettings.timeout}
-                onChange={(e) => handleSettingChange('timeout', parseInt(e.target.value))}
+                onChange={(e) =>
+                  handleSettingChange("timeout", parseInt(e.target.value))
+                }
                 className={`w-full px-3 py-2 rounded-lg border transition-all duration-300 ${
                   isDark
-                    ? "bg-[#1f1f1f] border-white/10 text-white focus:border-yellow-400/50"
-                    : "bg-white border-gray-200 text-[#141414] focus:border-yellow-400/50"
-                } focus:outline-none focus:ring-1 focus:ring-yellow-400/50`}
+                    ? "bg-[#1f1f1f] border-white/10 text-white focus:border-indigo-400/50"
+                    : "bg-white border-gray-200 text-[#141414] focus:border-indigo-400/50"
+                } focus:outline-none focus:ring-1 focus:ring-indigo-400/50`}
                 min="1000"
                 max="60000"
                 step="1000"
@@ -118,19 +130,23 @@ const Settings = ({ isOpen, onClose, isDark, settings, onSettingsChange }) => {
 
             {/* Max Retries */}
             <div className="space-y-2">
-              <label className={`block text-sm font-medium ${
-                isDark ? "text-gray-300" : "text-gray-700"
-              }`}>
+              <label
+                className={`block text-sm font-medium ${
+                  isDark ? "text-gray-300" : "text-gray-700"
+                }`}
+              >
                 Max Retries
               </label>
               <select
                 value={localSettings.maxRetries}
-                onChange={(e) => handleSettingChange('maxRetries', parseInt(e.target.value))}
+                onChange={(e) =>
+                  handleSettingChange("maxRetries", parseInt(e.target.value))
+                }
                 className={`w-full px-3 py-2 rounded-lg border transition-all duration-300 ${
                   isDark
-                    ? "bg-[#1f1f1f] border-white/10 text-white focus:border-yellow-400/50"
-                    : "bg-white border-gray-200 text-[#141414] focus:border-yellow-400/50"
-                } focus:outline-none focus:ring-1 focus:ring-yellow-400/50`}
+                    ? "bg-[#1f1f1f] border-white/10 text-white focus:border-indigo-400/50"
+                    : "bg-white border-gray-200 text-[#141414] focus:border-indigo-400/50"
+                } focus:outline-none focus:ring-1 focus:ring-indigo-400/50`}
               >
                 <option value={0}>0</option>
                 <option value={1}>1</option>
@@ -143,23 +159,33 @@ const Settings = ({ isOpen, onClose, isDark, settings, onSettingsChange }) => {
 
           {/* Display Settings */}
           <div className="space-y-4">
-            <h3 className={`text-lg font-semibold ${
-              isDark ? "text-white" : "text-[#141414]"
-            }`}>
+            <h3
+              className={`text-lg font-semibold ${
+                isDark ? "text-white" : "text-[#141414]"
+              }`}
+            >
               Display Settings
             </h3>
 
             {/* Auto Format JSON */}
             <div className="flex items-center justify-between">
-              <label className={`text-sm font-medium ${
-                isDark ? "text-gray-300" : "text-gray-700"
-              }`}>
+              <label
+                className={`text-sm font-medium ${
+                  isDark ? "text-gray-300" : "text-gray-700"
+                }`}
+              >
                 Auto Format JSON Response
               </label>
               <button
-                onClick={() => handleSettingChange('autoFormat', !localSettings.autoFormat)}
+                onClick={() =>
+                  handleSettingChange("autoFormat", !localSettings.autoFormat)
+                }
                 className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-300 ${
-                  localSettings.autoFormat ? "bg-yellow-400" : isDark ? "bg-gray-600" : "bg-gray-300"
+                  localSettings.autoFormat
+                    ? "bg-indigo-400"
+                    : isDark
+                    ? "bg-gray-600"
+                    : "bg-gray-300"
                 }`}
               >
                 <span
@@ -172,20 +198,30 @@ const Settings = ({ isOpen, onClose, isDark, settings, onSettingsChange }) => {
 
             {/* Show Response Headers */}
             <div className="flex items-center justify-between">
-              <label className={`text-sm font-medium ${
-                isDark ? "text-gray-300" : "text-gray-700"
-              }`}>
+              <label
+                className={`text-sm font-medium ${
+                  isDark ? "text-gray-300" : "text-gray-700"
+                }`}
+              >
                 Show Response Headers
               </label>
               <button
-                onClick={() => handleSettingChange('showHeaders', !localSettings.showHeaders)}
+                onClick={() =>
+                  handleSettingChange("showHeaders", !localSettings.showHeaders)
+                }
                 className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-300 ${
-                  localSettings.showHeaders ? "bg-yellow-400" : isDark ? "bg-gray-600" : "bg-gray-300"
+                  localSettings.showHeaders
+                    ? "bg-indigo-400"
+                    : isDark
+                    ? "bg-gray-600"
+                    : "bg-gray-300"
                 }`}
               >
                 <span
                   className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-300 ${
-                    localSettings.showHeaders ? "translate-x-6" : "translate-x-1"
+                    localSettings.showHeaders
+                      ? "translate-x-6"
+                      : "translate-x-1"
                   }`}
                 />
               </button>
@@ -194,28 +230,43 @@ const Settings = ({ isOpen, onClose, isDark, settings, onSettingsChange }) => {
 
           {/* Security Settings */}
           <div className="space-y-4">
-            <h3 className={`text-lg font-semibold ${
-              isDark ? "text-white" : "text-[#141414]"
-            }`}>
+            <h3
+              className={`text-lg font-semibold ${
+                isDark ? "text-white" : "text-[#141414]"
+              }`}
+            >
               Security Settings
             </h3>
 
             {/* Follow Redirects */}
             <div className="flex items-center justify-between">
-              <label className={`text-sm font-medium ${
-                isDark ? "text-gray-300" : "text-gray-700"
-              }`}>
+              <label
+                className={`text-sm font-medium ${
+                  isDark ? "text-gray-300" : "text-gray-700"
+                }`}
+              >
                 Follow Redirects
               </label>
               <button
-                onClick={() => handleSettingChange('followRedirects', !localSettings.followRedirects)}
+                onClick={() =>
+                  handleSettingChange(
+                    "followRedirects",
+                    !localSettings.followRedirects
+                  )
+                }
                 className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-300 ${
-                  localSettings.followRedirects ? "bg-yellow-400" : isDark ? "bg-gray-600" : "bg-gray-300"
+                  localSettings.followRedirects
+                    ? "bg-indigo-400"
+                    : isDark
+                    ? "bg-gray-600"
+                    : "bg-gray-300"
                 }`}
               >
                 <span
                   className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-300 ${
-                    localSettings.followRedirects ? "translate-x-6" : "translate-x-1"
+                    localSettings.followRedirects
+                      ? "translate-x-6"
+                      : "translate-x-1"
                   }`}
                 />
               </button>
@@ -223,20 +274,30 @@ const Settings = ({ isOpen, onClose, isDark, settings, onSettingsChange }) => {
 
             {/* Validate SSL */}
             <div className="flex items-center justify-between">
-              <label className={`text-sm font-medium ${
-                isDark ? "text-gray-300" : "text-gray-700"
-              }`}>
+              <label
+                className={`text-sm font-medium ${
+                  isDark ? "text-gray-300" : "text-gray-700"
+                }`}
+              >
                 Validate SSL Certificates
               </label>
               <button
-                onClick={() => handleSettingChange('validateSSL', !localSettings.validateSSL)}
+                onClick={() =>
+                  handleSettingChange("validateSSL", !localSettings.validateSSL)
+                }
                 className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-300 ${
-                  localSettings.validateSSL ? "bg-yellow-400" : isDark ? "bg-gray-600" : "bg-gray-300"
+                  localSettings.validateSSL
+                    ? "bg-indigo-400"
+                    : isDark
+                    ? "bg-gray-600"
+                    : "bg-gray-300"
                 }`}
               >
                 <span
                   className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-300 ${
-                    localSettings.validateSSL ? "translate-x-6" : "translate-x-1"
+                    localSettings.validateSSL
+                      ? "translate-x-6"
+                      : "translate-x-1"
                   }`}
                 />
               </button>
@@ -245,9 +306,11 @@ const Settings = ({ isOpen, onClose, isDark, settings, onSettingsChange }) => {
         </div>
 
         {/* Footer */}
-        <div className={`flex items-center justify-between p-6 border-t ${
-          isDark ? "border-white/10" : "border-gray-200/50"
-        }`}>
+        <div
+          className={`flex items-center justify-between p-6 border-t ${
+            isDark ? "border-white/10" : "border-gray-200/50"
+          }`}
+        >
           <button
             onClick={handleReset}
             className={`px-4 py-2 rounded-lg border transition-all duration-300 hover:scale-105 ${
@@ -258,7 +321,7 @@ const Settings = ({ isOpen, onClose, isDark, settings, onSettingsChange }) => {
           >
             Reset to Defaults
           </button>
-          
+
           <div className="flex space-x-3">
             <button
               onClick={onClose}
@@ -272,7 +335,7 @@ const Settings = ({ isOpen, onClose, isDark, settings, onSettingsChange }) => {
             </button>
             <button
               onClick={onClose}
-              className="px-4 py-2 bg-yellow-400 text-black rounded-lg font-semibold transition-all duration-300 hover:scale-105 hover:bg-yellow-500"
+              className="px-4 py-2 bg-indigo-400 text-black rounded-lg font-semibold transition-all duration-300 hover:scale-105 hover:bg-indigo-500"
             >
               Save Changes
             </button>

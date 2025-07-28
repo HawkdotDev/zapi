@@ -112,17 +112,17 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
             placeholder="Enter your GraphQL endpoint..."
             className={`w-full px-4 py-3 rounded-xl border font-mono text-sm transition-all duration-300 outline-none focus:scale-[1.02] ${
               isDark
-                ? "bg-[#1f1f1f] border-white/10 text-white placeholder-gray-400 focus:border-yellow-400/50 focus:bg-[#252525]"
-                : "bg-white border-gray-200/50 text-[#141414] placeholder-gray-500 focus:border-yellow-400/50 focus:bg-gray-50"
+                ? "bg-[#1f1f1f] border-white/10 text-white placeholder-gray-400 focus:border-indigo-400/50 focus:bg-[#252525]"
+                : "bg-white border-gray-200/50 text-[#141414] placeholder-gray-500 focus:border-indigo-400/50 focus:bg-gray-50"
             }`}
           />
-          <div className="absolute inset-0 rounded-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 pointer-events-none bg-yellow-400/5" />
+          <div className="absolute inset-0 rounded-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 pointer-events-none bg-indigo-400/5" />
         </div>
 
         <button
           onClick={handleSend}
           disabled={loading}
-          className="px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:hover:scale-100 shadow-lg bg-yellow-400 text-black hover:bg-emerald-400 shadow-yellow-500/25"
+          className="px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:hover:scale-100 shadow-lg bg-indigo-400 text-black hover:bg-emerald-400 shadow-indigo-500/25"
         >
           {loading ? (
             <div className="flex items-center space-x-2">
@@ -148,7 +148,7 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
               onClick={() => setActiveTab(tab)}
               className={`flex-1 px-4 py-2 text-sm font-semibold capitalize rounded-lg transition-all duration-300 relative overflow-hidden ${
                 activeTab === tab
-                  ? "text-black bg-yellow-400 shadow-lg"
+                  ? "text-black bg-indigo-400 shadow-lg"
                   : isDark
                   ? "text-gray-400 hover:text-white hover:bg-[#252525]"
                   : "text-gray-600 hover:text-gray-900 hover:bg-white"
@@ -168,8 +168,8 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
             onClick={() => setAuthDropdownOpen(!authDropdownOpen)}
             className={`px-4 py-3 rounded-xl border transition-all duration-300 hover:scale-105 focus:scale-105 outline-none flex items-center space-x-2 ${
               isDark
-                ? "bg-[#1f1f1f] border-white/10 text-gray-300 hover:border-yellow-400/50 focus:border-yellow-400/50 focus:bg-[#252525]"
-                : "bg-white border-gray-200/50 text-gray-700 hover:border-yellow-400/50 focus:border-yellow-400/50 focus:bg-gray-50"
+                ? "bg-[#1f1f1f] border-white/10 text-gray-300 hover:border-indigo-400/50 focus:border-indigo-400/50 focus:bg-[#252525]"
+                : "bg-white border-gray-200/50 text-gray-700 hover:border-indigo-400/50 focus:border-indigo-400/50 focus:bg-gray-50"
             }`}
           >
             <span className="text-sm font-medium whitespace-nowrap">
@@ -205,11 +205,11 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
                 className={`w-full px-4 py-3 text-left text-sm font-medium transition-all duration-200 flex items-center space-x-2 ${
                   graphqlRequest.auth.type === "none"
                     ? isDark
-                      ? "bg-yellow-400/20 text-yellow-400"
-                      : "bg-yellow-50 text-yellow-600"
+                      ? "bg-indigo-400/20 text-indigo-400"
+                      : "bg-indigo-50 text-indigo-600"
                     : isDark
-                    ? "text-white hover:bg-[#252525] hover:text-yellow-400"
-                    : "text-gray-900 hover:bg-gray-50 hover:text-yellow-600"
+                    ? "text-white hover:bg-[#252525] hover:text-indigo-400"
+                    : "text-gray-900 hover:bg-gray-50 hover:text-indigo-600"
                 }`}
               >
                 <span>🚫</span>
@@ -230,11 +230,11 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
                 className={`w-full px-4 py-3 text-left text-sm font-medium transition-all duration-200 flex items-center space-x-2 ${
                   graphqlRequest.auth.type === "bearer"
                     ? isDark
-                      ? "bg-yellow-400/20 text-yellow-400"
-                      : "bg-yellow-50 text-yellow-600"
+                      ? "bg-indigo-400/20 text-indigo-400"
+                      : "bg-indigo-50 text-indigo-600"
                     : isDark
-                    ? "text-white hover:bg-[#252525] hover:text-yellow-400"
-                    : "text-gray-900 hover:bg-gray-50 hover:text-yellow-600"
+                    ? "text-white hover:bg-[#252525] hover:text-indigo-400"
+                    : "text-gray-900 hover:bg-gray-50 hover:text-indigo-600"
                 }`}
               >
                 <span>🔑</span>
@@ -245,11 +245,11 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
                 className={`w-full px-4 py-3 text-left text-sm font-medium transition-all duration-200 flex items-center space-x-2 ${
                   graphqlRequest.auth.type === "basic"
                     ? isDark
-                      ? "bg-yellow-400/20 text-yellow-400"
-                      : "bg-yellow-50 text-yellow-600"
+                      ? "bg-indigo-400/20 text-indigo-400"
+                      : "bg-indigo-50 text-indigo-600"
                     : isDark
-                    ? "text-white hover:bg-[#252525] hover:text-yellow-400"
-                    : "text-gray-900 hover:bg-gray-50 hover:text-yellow-600"
+                    ? "text-white hover:bg-[#252525] hover:text-indigo-400"
+                    : "text-gray-900 hover:bg-gray-50 hover:text-indigo-600"
                 }`}
               >
                 <span>👤</span>
@@ -260,11 +260,11 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
                 className={`w-full px-4 py-3 text-left text-sm font-medium transition-all duration-200 flex items-center space-x-2 ${
                   graphqlRequest.auth.type === "apiKey"
                     ? isDark
-                      ? "bg-yellow-400/20 text-yellow-400"
-                      : "bg-yellow-50 text-yellow-600"
+                      ? "bg-indigo-400/20 text-indigo-400"
+                      : "bg-indigo-50 text-indigo-600"
                     : isDark
-                    ? "text-white hover:bg-[#252525] hover:text-yellow-400"
-                    : "text-gray-900 hover:bg-gray-50 hover:text-yellow-600"
+                    ? "text-white hover:bg-[#252525] hover:text-indigo-400"
+                    : "text-gray-900 hover:bg-gray-50 hover:text-indigo-600"
                 }`}
               >
                 <span>🗝️</span>
@@ -317,8 +317,8 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
                   placeholder="Enter your bearer token"
                   className={`w-full px-4 py-2 rounded-lg border text-sm font-mono transition-all duration-300 outline-none focus:scale-105 ${
                     isDark
-                      ? "bg-[#1f1f1f] border-white/10 text-white placeholder-gray-400 focus:border-yellow-400/50 focus:bg-[#252525]"
-                      : "bg-white border-gray-200/50 text-[#141414] placeholder-gray-500 focus:border-yellow-400/50 focus:bg-gray-50"
+                      ? "bg-[#1f1f1f] border-white/10 text-white placeholder-gray-400 focus:border-indigo-400/50 focus:bg-[#252525]"
+                      : "bg-white border-gray-200/50 text-[#141414] placeholder-gray-500 focus:border-indigo-400/50 focus:bg-gray-50"
                   }`}
                 />
               </div>
@@ -339,8 +339,8 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
                     placeholder="Enter username"
                     className={`w-full px-4 py-2 rounded-lg border text-sm font-mono transition-all duration-300 outline-none focus:scale-105 ${
                       isDark
-                        ? "bg-[#1f1f1f] border-white/10 text-white placeholder-gray-400 focus:border-yellow-400/50 focus:bg-[#252525]"
-                        : "bg-white border-gray-200/50 text-[#141414] placeholder-gray-500 focus:border-yellow-400/50 focus:bg-gray-50"
+                        ? "bg-[#1f1f1f] border-white/10 text-white placeholder-gray-400 focus:border-indigo-400/50 focus:bg-[#252525]"
+                        : "bg-white border-gray-200/50 text-[#141414] placeholder-gray-500 focus:border-indigo-400/50 focus:bg-gray-50"
                     }`}
                   />
                 </div>
@@ -357,8 +357,8 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
                     placeholder="Enter password"
                     className={`w-full px-4 py-2 rounded-lg border text-sm font-mono transition-all duration-300 outline-none focus:scale-105 ${
                       isDark
-                        ? "bg-[#1f1f1f] border-white/10 text-white placeholder-gray-400 focus:border-yellow-400/50 focus:bg-[#252525]"
-                        : "bg-white border-gray-200/50 text-[#141414] placeholder-gray-500 focus:border-yellow-400/50 focus:bg-gray-50"
+                        ? "bg-[#1f1f1f] border-white/10 text-white placeholder-gray-400 focus:border-indigo-400/50 focus:bg-[#252525]"
+                        : "bg-white border-gray-200/50 text-[#141414] placeholder-gray-500 focus:border-indigo-400/50 focus:bg-gray-50"
                     }`}
                   />
                 </div>
@@ -380,8 +380,8 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
                     placeholder="e.g., X-API-Key, Authorization"
                     className={`w-full px-4 py-2 rounded-lg border text-sm font-mono transition-all duration-300 outline-none focus:scale-105 ${
                       isDark
-                        ? "bg-[#1f1f1f] border-white/10 text-white placeholder-gray-400 focus:border-yellow-400/50 focus:bg-[#252525]"
-                        : "bg-white border-gray-200/50 text-[#141414] placeholder-gray-500 focus:border-yellow-400/50 focus:bg-gray-50"
+                        ? "bg-[#1f1f1f] border-white/10 text-white placeholder-gray-400 focus:border-indigo-400/50 focus:bg-[#252525]"
+                        : "bg-white border-gray-200/50 text-[#141414] placeholder-gray-500 focus:border-indigo-400/50 focus:bg-gray-50"
                     }`}
                   />
                 </div>
@@ -398,8 +398,8 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
                     placeholder="Enter your API key"
                     className={`w-full px-4 py-2 rounded-lg border text-sm font-mono transition-all duration-300 outline-none focus:scale-105 ${
                       isDark
-                        ? "bg-[#1f1f1f] border-white/10 text-white placeholder-gray-400 focus:border-yellow-400/50 focus:bg-[#252525]"
-                        : "bg-white border-gray-200/50 text-[#141414] placeholder-gray-500 focus:border-yellow-400/50 focus:bg-gray-50"
+                        ? "bg-[#1f1f1f] border-white/10 text-white placeholder-gray-400 focus:border-indigo-400/50 focus:bg-[#252525]"
+                        : "bg-white border-gray-200/50 text-[#141414] placeholder-gray-500 focus:border-indigo-400/50 focus:bg-gray-50"
                     }`}
                   />
                 </div>
@@ -414,8 +414,8 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
                     }
                     className={`w-full px-4 py-2 rounded-lg border text-sm transition-all duration-300 outline-none focus:scale-105 ${
                       isDark
-                        ? "bg-[#1f1f1f] border-white/10 text-white focus:border-yellow-400/50 focus:bg-[#252525]"
-                        : "bg-white border-gray-200/50 text-[#141414] focus:border-yellow-400/50 focus:bg-gray-50"
+                        ? "bg-[#1f1f1f] border-white/10 text-white focus:border-indigo-400/50 focus:bg-[#252525]"
+                        : "bg-white border-gray-200/50 text-[#141414] focus:border-indigo-400/50 focus:bg-gray-50"
                     }`}
                   >
                     <option value="header">Header</option>
@@ -443,11 +443,11 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
               placeholder="Enter your GraphQL query..."
               className={`w-full h-40 px-4 py-3 rounded-xl border font-mono text-sm transition-all duration-300 outline-none focus:scale-[1.02] resize-none ${
                 isDark
-                  ? "bg-[#1f1f1f] border-white/10 text-white placeholder-gray-400 focus:border-yellow-400/50 focus:bg-[#252525]"
-                  : "bg-white border-gray-200/50 text-[#141414] placeholder-gray-500 focus:border-yellow-400/50 focus:bg-gray-50"
+                  ? "bg-[#1f1f1f] border-white/10 text-white placeholder-gray-400 focus:border-indigo-400/50 focus:bg-[#252525]"
+                  : "bg-white border-gray-200/50 text-[#141414] placeholder-gray-500 focus:border-indigo-400/50 focus:bg-gray-50"
               }`}
             />
-            <div className="absolute inset-0 rounded-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 pointer-events-none bg-yellow-400/5" />
+            <div className="absolute inset-0 rounded-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 pointer-events-none bg-indigo-400/5" />
           </div>
 
           <div className="relative group">
@@ -463,11 +463,11 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
               placeholder="Operation Name (optional)"
               className={`w-full px-4 py-3 rounded-xl border font-mono text-sm transition-all duration-300 outline-none focus:scale-[1.02] ${
                 isDark
-                  ? "bg-[#1f1f1f] border-white/10 text-white placeholder-gray-400 focus:border-yellow-400/50 focus:bg-[#252525]"
-                  : "bg-white border-gray-200/50 text-[#141414] placeholder-gray-500 focus:border-yellow-400/50 focus:bg-gray-50"
+                  ? "bg-[#1f1f1f] border-white/10 text-white placeholder-gray-400 focus:border-indigo-400/50 focus:bg-[#252525]"
+                  : "bg-white border-gray-200/50 text-[#141414] placeholder-gray-500 focus:border-indigo-400/50 focus:bg-gray-50"
               }`}
             />
-            <div className="absolute inset-0 rounded-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 pointer-events-none bg-yellow-400/5" />
+            <div className="absolute inset-0 rounded-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 pointer-events-none bg-indigo-400/5" />
           </div>
         </div>
       )}
@@ -485,11 +485,11 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
             placeholder="Enter GraphQL variables (JSON format)..."
             className={`w-full h-32 px-4 py-3 rounded-xl border font-mono text-sm transition-all duration-300 outline-none focus:scale-[1.02] resize-none ${
               isDark
-                ? "bg-[#1f1f1f] border-white/10 text-white placeholder-gray-400 focus:border-yellow-400/50 focus:bg-[#252525]"
-                : "bg-white border-gray-200/50 text-[#141414] placeholder-gray-500 focus:border-yellow-400/50 focus:bg-gray-50"
+                ? "bg-[#1f1f1f] border-white/10 text-white placeholder-gray-400 focus:border-indigo-400/50 focus:bg-[#252525]"
+                : "bg-white border-gray-200/50 text-[#141414] placeholder-gray-500 focus:border-indigo-400/50 focus:bg-gray-50"
             }`}
           />
-          <div className="absolute inset-0 rounded-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 pointer-events-none bg-yellow-400/5" />
+          <div className="absolute inset-0 rounded-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 pointer-events-none bg-indigo-400/5" />
         </div>
       )}
 
@@ -504,8 +504,8 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
                 placeholder="Header key"
                 className={`flex-1 px-4 py-2 rounded-lg border text-sm font-mono transition-all duration-300 outline-none focus:scale-105 ${
                   isDark
-                    ? "bg-[#1f1f1f] border-white/10 text-white placeholder-gray-400 focus:border-yellow-400/50 focus:bg-[#252525]"
-                    : "bg-white border-gray-200/50 text-[#141414] placeholder-gray-500 focus:border-yellow-400/50 focus:bg-gray-50"
+                    ? "bg-[#1f1f1f] border-white/10 text-white placeholder-gray-400 focus:border-indigo-400/50 focus:bg-[#252525]"
+                    : "bg-white border-gray-200/50 text-[#141414] placeholder-gray-500 focus:border-indigo-400/50 focus:bg-gray-50"
                 }`}
               />
               <input
@@ -515,8 +515,8 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
                 placeholder="Header value"
                 className={`flex-1 px-4 py-2 rounded-lg border text-sm font-mono transition-all duration-300 outline-none focus:scale-105 ${
                   isDark
-                    ? "bg-[#1f1f1f] border-white/10 text-white placeholder-gray-400 focus:border-yellow-400/50 focus:bg-[#252525]"
-                    : "bg-white border-gray-200/50 text-[#141414] placeholder-gray-500 focus:border-yellow-400/50 focus:bg-gray-50"
+                    ? "bg-[#1f1f1f] border-white/10 text-white placeholder-gray-400 focus:border-indigo-400/50 focus:bg-[#252525]"
+                    : "bg-white border-gray-200/50 text-[#141414] placeholder-gray-500 focus:border-indigo-400/50 focus:bg-gray-50"
                 }`}
               />
               <button
@@ -535,8 +535,8 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
             onClick={addHeader}
             className={`flex items-center space-x-2 px-4 py-2 rounded-lg border-2 border-dashed transition-all duration-300 hover:scale-105 ${
               isDark
-                ? "border-yellow-400/30 text-yellow-400 hover:border-yellow-400/50 hover:bg-yellow-400/10"
-                : "border-yellow-400/30 text-yellow-400 hover:border-yellow-400/50 hover:bg-yellow-50"
+                ? "border-indigo-400/30 text-indigo-400 hover:border-indigo-400/50 hover:bg-indigo-400/10"
+                : "border-indigo-400/30 text-indigo-400 hover:border-indigo-400/50 hover:bg-indigo-50"
             }`}
           >
             <span className="text-lg">+</span>

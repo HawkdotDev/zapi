@@ -16,7 +16,7 @@
 }
 .custom-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: yellow transparent;
+  scrollbar-color: indigo transparent;
 }
 
 .custom-scrollbar::-webkit-scrollbar {
@@ -28,6 +28,6 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: yellow;
+  background-color: indigo;
   border-radius: 4px;
 }
