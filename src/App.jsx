@@ -255,8 +255,8 @@ function App() {
                 <span
                   className={`text-xs px-2 py-1 rounded-full ${
                     isDark
-                      ? "bg-gray-700 text-gray-400"
-                      : "bg-gray-200 text-gray-500"
+                      ? "bg-gray-700 text-gray-300"
+                      : "bg-gray-200 text-gray-600"
                   }`}
                 >
                   Soon
@@ -296,7 +296,7 @@ function App() {
       </div>
 
       {/* Response Section */}
-      <div className="flex-1 p-6">
+      <div className="flex-1 py-4 px-6">
         <h3
           className={`text-lg font-bold mb-4 flex items-center space-x-2 ${
             isDark ? "text-white" : "text-[#141414]"

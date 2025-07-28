@@ -98,7 +98,7 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
   return (
     <>
       {/* GraphQL URL */}
-      <div className="flex gap-3 mb-6">
+      <div className="flex gap-3 mb-4">
         <div className="flex-1 relative group">
           <input
             type="text"
@@ -136,7 +136,7 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
       </div>
 
       {/* GraphQL Tabs and Auth Dropdown */}
-      <div className="flex gap-3 mb-6">
+      <div className="flex gap-3 mb-4">
         <div
           className={`flex rounded-xl p-1 flex-1 ${
             isDark ? "bg-[#1f1f1f]" : "bg-gray-100"
@@ -280,7 +280,7 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
 
       {/* Auth Configuration (shows when auth type is not "none") */}
       {graphqlRequest.auth.type !== "none" && (
-        <div className="mb-6">
+        <div className="mb-4">
           <div
             className={`p-4 rounded-lg border ${
               isDark
