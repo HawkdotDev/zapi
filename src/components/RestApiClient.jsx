@@ -394,7 +394,6 @@ const RestApiClient = ({ isDark, loading, onSendRequest }) => {
           >
             <div className="flex justify-between items-center">
               <div className="flex items-center space-x-2 mb-3">
-                {/* <span className="text-lg">🔐</span> */}
                 <span className="font-semibold">Authentication</span>
               </div>
               <div className="text-sm opacity-70 mb-4">
