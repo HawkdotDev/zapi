@@ -122,7 +122,7 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
         <button
           onClick={handleSend}
           disabled={loading}
-          className="px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:hover:scale-100 shadow-lg bg-indigo-400 text-black hover:bg-emerald-400 shadow-indigo-500/25"
+          className="px-5 py-3 rounded-xl font-bold text-sm transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:hover:scale-100 shadow-lg bg-indigo-400 text-black hover:bg-emerald-400 shadow-indigo-500/25"
         >
           {loading ? (
             <div className="flex items-center space-x-2">
@@ -130,7 +130,7 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
               <span>Sending</span>
             </div>
           ) : (
-            "Send ↗️"
+            "Send"
           )}
         </button>
       </div>
