@@ -4,7 +4,12 @@
   "description": "Zapi is a lightweight extension that lets you send API requests instantly from a popup interface.",
   "version": "0.4.0",
   "icons": {
-    "32": "icons/icon32.png"
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "96": "icons/icon96.png",
+    "128": "icons/icon128.png",
+    "256": "icons/icon256.png"
   },
   "permissions": ["storage", "activeTab"],
   "host_permissions": ["<all_urls>"],
