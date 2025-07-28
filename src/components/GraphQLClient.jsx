@@ -24,8 +24,8 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
       type: "none",
       bearer: "",
       basic: { username: "", password: "" },
-      apiKey: { key: "", value: "", location: "header" }
-    }
+      apiKey: { key: "", value: "", location: "header" },
+    },
   });
 
   const [activeTab, setActiveTab] = useState("query");
@@ -57,7 +57,7 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
   const updateAuth = (field, value) => {
     setGraphqlRequest((prev) => ({
       ...prev,
-      auth: { ...prev.auth, [field]: value }
+      auth: { ...prev.auth, [field]: value },
     }));
   };
 
@@ -66,8 +66,8 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
       ...prev,
       auth: {
         ...prev.auth,
-        [section]: { ...prev.auth[section], [field]: value }
-      }
+        [section]: { ...prev.auth[section], [field]: value },
+      },
     }));
   };
 
@@ -172,11 +172,13 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
                 : "bg-white border-gray-200/50 text-gray-700 hover:border-yellow-400/50 focus:border-yellow-400/50 focus:bg-gray-50"
             }`}
           >
-            <span className="text-sm font-medium whitespace-nowrap">{getAuthDisplayText()}</span>
+            <span className="text-sm font-medium whitespace-nowrap">
+              {getAuthDisplayText()}
+            </span>
             <svg
-              className={`w-4 h-4 transition-transform duration-200 ${authDropdownOpen ? 'rotate-180' : ''} ${
-                isDark ? "text-gray-400" : "text-gray-600"
-              }`}
+              className={`w-4 h-4 transition-transform duration-200 ${
+                authDropdownOpen ? "rotate-180" : ""
+              } ${isDark ? "text-gray-400" : "text-gray-600"}`}
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -189,38 +191,50 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
               />
             </svg>
           </button>
-          
+
           {authDropdownOpen && (
-            <div className={`absolute top-full right-0 mt-2 w-48 rounded-xl border shadow-lg z-50 overflow-hidden ${
-              isDark 
-                ? "bg-[#1f1f1f] border-white/10" 
-                : "bg-white border-gray-200/50"
-            }`}>
+            <div
+              className={`absolute top-full right-0 mt-2 w-48 rounded-xl border shadow-lg z-50 overflow-hidden ${
+                isDark
+                  ? "bg-[#1f1f1f] border-white/10"
+                  : "bg-white border-gray-200/50"
+              }`}
+            >
               <button
                 onClick={() => handleAuthSelection("none")}
                 className={`w-full px-4 py-3 text-left text-sm font-medium transition-all duration-200 flex items-center space-x-2 ${
-                  graphqlRequest.auth.type === "none" 
-                    ? (isDark ? "bg-yellow-400/20 text-yellow-400" : "bg-yellow-50 text-yellow-600")
-                    : (isDark ? "text-white hover:bg-[#252525] hover:text-yellow-400" : "text-gray-900 hover:bg-gray-50 hover:text-yellow-600")
+                  graphqlRequest.auth.type === "none"
+                    ? isDark
+                      ? "bg-yellow-400/20 text-yellow-400"
+                      : "bg-yellow-50 text-yellow-600"
+                    : isDark
+                    ? "text-white hover:bg-[#252525] hover:text-yellow-400"
+                    : "text-gray-900 hover:bg-gray-50 hover:text-yellow-600"
                 }`}
               >
                 <span>🚫</span>
                 <span>No Auth</span>
               </button>
-              
-              <div className={`px-4 py-3 text-left text-sm font-medium flex items-center space-x-2 opacity-50 cursor-not-allowed ${
-                isDark ? "text-gray-500" : "text-gray-400"
-              }`}>
+
+              <div
+                className={`px-4 py-3 text-left text-sm font-medium flex items-center space-x-2 opacity-50 cursor-not-allowed ${
+                  isDark ? "text-gray-500" : "text-gray-400"
+                }`}
+              >
                 <span>⏳</span>
                 <span>Coming Soon</span>
               </div>
-              
+
               <button
                 onClick={() => handleAuthSelection("bearer")}
                 className={`w-full px-4 py-3 text-left text-sm font-medium transition-all duration-200 flex items-center space-x-2 ${
-                  graphqlRequest.auth.type === "bearer" 
-                    ? (isDark ? "bg-yellow-400/20 text-yellow-400" : "bg-yellow-50 text-yellow-600")
-                    : (isDark ? "text-white hover:bg-[#252525] hover:text-yellow-400" : "text-gray-900 hover:bg-gray-50 hover:text-yellow-600")
+                  graphqlRequest.auth.type === "bearer"
+                    ? isDark
+                      ? "bg-yellow-400/20 text-yellow-400"
+                      : "bg-yellow-50 text-yellow-600"
+                    : isDark
+                    ? "text-white hover:bg-[#252525] hover:text-yellow-400"
+                    : "text-gray-900 hover:bg-gray-50 hover:text-yellow-600"
                 }`}
               >
                 <span>🔑</span>
@@ -229,9 +243,13 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
               <button
                 onClick={() => handleAuthSelection("basic")}
                 className={`w-full px-4 py-3 text-left text-sm font-medium transition-all duration-200 flex items-center space-x-2 ${
-                  graphqlRequest.auth.type === "basic" 
-                    ? (isDark ? "bg-yellow-400/20 text-yellow-400" : "bg-yellow-50 text-yellow-600")
-                    : (isDark ? "text-white hover:bg-[#252525] hover:text-yellow-400" : "text-gray-900 hover:bg-gray-50 hover:text-yellow-600")
+                  graphqlRequest.auth.type === "basic"
+                    ? isDark
+                      ? "bg-yellow-400/20 text-yellow-400"
+                      : "bg-yellow-50 text-yellow-600"
+                    : isDark
+                    ? "text-white hover:bg-[#252525] hover:text-yellow-400"
+                    : "text-gray-900 hover:bg-gray-50 hover:text-yellow-600"
                 }`}
               >
                 <span>👤</span>
@@ -240,9 +258,13 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
               <button
                 onClick={() => handleAuthSelection("apiKey")}
                 className={`w-full px-4 py-3 text-left text-sm font-medium transition-all duration-200 flex items-center space-x-2 ${
-                  graphqlRequest.auth.type === "apiKey" 
-                    ? (isDark ? "bg-yellow-400/20 text-yellow-400" : "bg-yellow-50 text-yellow-600")
-                    : (isDark ? "text-white hover:bg-[#252525] hover:text-yellow-400" : "text-gray-900 hover:bg-gray-50 hover:text-yellow-600")
+                  graphqlRequest.auth.type === "apiKey"
+                    ? isDark
+                      ? "bg-yellow-400/20 text-yellow-400"
+                      : "bg-yellow-50 text-yellow-600"
+                    : isDark
+                    ? "text-white hover:bg-[#252525] hover:text-yellow-400"
+                    : "text-gray-900 hover:bg-gray-50 hover:text-yellow-600"
                 }`}
               >
                 <span>🗝️</span>
@@ -250,11 +272,11 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
               </button>
             </div>
           )}
-          
+
           {/* Click outside to close */}
           {authDropdownOpen && (
-            <div 
-              className="fixed inset-0 z-40" 
+            <div
+              className="fixed inset-0 z-40"
               onClick={() => setAuthDropdownOpen(false)}
             />
           )}
@@ -264,22 +286,30 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
       {/* Auth Configuration (shows when auth type is not "none") */}
       {graphqlRequest.auth.type !== "none" && (
         <div className="mb-6">
-          <div className={`p-4 rounded-lg border ${
-            isDark 
-              ? "bg-[#1a1a1a] border-white/10" 
-              : "bg-gray-50 border-gray-200"
-          }`}>
-            <div className="flex items-center space-x-2 mb-3">
-              <span className="text-lg">🔐</span>
-              <span className="font-semibold">Authentication</span>
+          <div
+            className={`p-4 rounded-lg border ${
+              isDark
+                ? "bg-[#1a1a1a] border-white/10"
+                : "bg-gray-50 border-gray-200"
+            }`}
+          >
+            <div className="flex justify-between items-center">
+              <div className="flex items-center space-x-2 mb-3">
+                <span className="font-semibold">Authentication</span>
+              </div>
+              <div className="text-sm opacity-70 mb-4">
+                Current:{" "}
+                <span className="font-medium capitalize">
+                  {getAuthDisplayText()}
+                </span>
+              </div>
             </div>
-            <div className="text-sm opacity-70 mb-4">
-              Current: <span className="font-medium capitalize">{getAuthDisplayText()}</span>
-            </div>
-            
+
             {graphqlRequest.auth.type === "bearer" && (
               <div className="space-y-3">
-                <label className="block text-sm font-medium opacity-70">Bearer Token</label>
+                <label className="block text-sm font-medium opacity-70">
+                  Bearer Token
+                </label>
                 <input
                   type="password"
                   value={graphqlRequest.auth.bearer}
@@ -297,11 +327,15 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
             {graphqlRequest.auth.type === "basic" && (
               <div className="space-y-3">
                 <div>
-                  <label className="block text-sm font-medium opacity-70 mb-2">Username</label>
+                  <label className="block text-sm font-medium opacity-70 mb-2">
+                    Username
+                  </label>
                   <input
                     type="text"
                     value={graphqlRequest.auth.basic.username}
-                    onChange={(e) => updateAuthNested("basic", "username", e.target.value)}
+                    onChange={(e) =>
+                      updateAuthNested("basic", "username", e.target.value)
+                    }
                     placeholder="Enter username"
                     className={`w-full px-4 py-2 rounded-lg border text-sm font-mono transition-all duration-300 outline-none focus:scale-105 ${
                       isDark
@@ -311,11 +345,15 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium opacity-70 mb-2">Password</label>
+                  <label className="block text-sm font-medium opacity-70 mb-2">
+                    Password
+                  </label>
                   <input
                     type="password"
                     value={graphqlRequest.auth.basic.password}
-                    onChange={(e) => updateAuthNested("basic", "password", e.target.value)}
+                    onChange={(e) =>
+                      updateAuthNested("basic", "password", e.target.value)
+                    }
                     placeholder="Enter password"
                     className={`w-full px-4 py-2 rounded-lg border text-sm font-mono transition-all duration-300 outline-none focus:scale-105 ${
                       isDark
@@ -330,11 +368,15 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
             {graphqlRequest.auth.type === "apiKey" && (
               <div className="space-y-3">
                 <div>
-                  <label className="block text-sm font-medium opacity-70 mb-2">Key</label>
+                  <label className="block text-sm font-medium opacity-70 mb-2">
+                    Key
+                  </label>
                   <input
                     type="text"
                     value={graphqlRequest.auth.apiKey.key}
-                    onChange={(e) => updateAuthNested("apiKey", "key", e.target.value)}
+                    onChange={(e) =>
+                      updateAuthNested("apiKey", "key", e.target.value)
+                    }
                     placeholder="e.g., X-API-Key, Authorization"
                     className={`w-full px-4 py-2 rounded-lg border text-sm font-mono transition-all duration-300 outline-none focus:scale-105 ${
                       isDark
@@ -344,11 +386,15 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium opacity-70 mb-2">Value</label>
+                  <label className="block text-sm font-medium opacity-70 mb-2">
+                    Value
+                  </label>
                   <input
                     type="password"
                     value={graphqlRequest.auth.apiKey.value}
-                    onChange={(e) => updateAuthNested("apiKey", "value", e.target.value)}
+                    onChange={(e) =>
+                      updateAuthNested("apiKey", "value", e.target.value)
+                    }
                     placeholder="Enter your API key"
                     className={`w-full px-4 py-2 rounded-lg border text-sm font-mono transition-all duration-300 outline-none focus:scale-105 ${
                       isDark
@@ -358,10 +404,14 @@ const GraphQLClient = ({ isDark, loading, onSendRequest }) => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium opacity-70 mb-2">Add to</label>
+                  <label className="block text-sm font-medium opacity-70 mb-2">
+                    Add to
+                  </label>
                   <select
                     value={graphqlRequest.auth.apiKey.location}
-                    onChange={(e) => updateAuthNested("apiKey", "location", e.target.value)}
+                    onChange={(e) =>
+                      updateAuthNested("apiKey", "location", e.target.value)
+                    }
                     className={`w-full px-4 py-2 rounded-lg border text-sm transition-all duration-300 outline-none focus:scale-105 ${
                       isDark
                         ? "bg-[#1f1f1f] border-white/10 text-white focus:border-yellow-400/50 focus:bg-[#252525]"
