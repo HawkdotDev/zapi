@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "zapi",
   "description": "Zapi is a lightweight extension that lets you send API requests instantly from a popup interface.",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "icons": {
     "32": "icons/icon32.png"
   },
