@@ -2,6 +2,7 @@ import { useState } from "react";
 import GraphQLClient from "./components/GraphQLClient";
 import RestApiClient from "./components/RestApiClient";
 import WebSocketClient from "./components/WebSocketClient";
+import Settings from "./components/Settings";
 
 const ThemeIcon = ({ isActive, className }) => (
   <svg
@@ -59,12 +60,34 @@ function App() {
   const [apiType, setApiType] = useState("rest"); // rest, graphql, websockets
   const [response, setResponse] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+  const [settings, setSettings] = useState({
+    timeout: 5000,
+    autoFormat: true,
+    showHeaders: true,
+    followRedirects: true,
+    validateSSL: true,
+    maxRetries: 3,
+    theme: 'auto'
+  });
 
   const toggleState = (key) => {
     setActiveStates((prev) => ({
       ...prev,
       [key]: !prev[key],
     }));
+  };
+
+  const handleSettingsClick = () => {
+    setShowSettings(true);
+  };
+
+  const handleSettingsClose = () => {
+    setShowSettings(false);
+  };
+
+  const handleSettingsChange = (newSettings) => {
+    setSettings(newSettings);
   };
 
   const isDark = !activeStates.theme; // Dark mode when theme is false
@@ -155,11 +178,11 @@ function App() {
           <nav className="flex space-x-2 items-center">
             {[
               { key: "theme", icon: ThemeIcon, active: activeStates.theme },
-              { key: "settings", icon: SettingsIcon, active: false },
-            ].map(({ key, icon, active }) => (
+              { key: "settings", icon: SettingsIcon, active: false, onClick: handleSettingsClick },
+            ].map(({ key, icon, active, onClick }) => (
               <button
                 key={key}
-                onClick={() => key !== "settings" && toggleState(key)}
+                onClick={onClick || (() => key !== "settings" && toggleState(key))}
                 className={`group relative p-3 rounded-xl border transition-all duration-300 hover:scale-110 hover:rotate-3 ${
                   isDark
                     ? "bg-[#1f1f1f] border-white/10 hover:bg-[#252525] hover:border-yellow-400/50"
@@ -255,7 +278,6 @@ function App() {
         )}
 
         {apiType === "graphql" && (
-          
           <GraphQLClient
             isDark={isDark}
             loading={loading}
@@ -322,7 +344,9 @@ function App() {
               >
                 {typeof response.data === "string" &&
                 (response.data.startsWith("{") || response.data.startsWith("["))
-                  ? JSON.stringify(JSON.parse(response.data), null, 2)
+                  ? settings.autoFormat 
+                    ? JSON.stringify(JSON.parse(response.data), null, 2)
+                    : response.data
                   : response.data}
               </pre>
             </div>
@@ -355,8 +379,17 @@ function App() {
           </div>
         )}
       </div>
+
+      {/* Settings Modal */}
+      <Settings
+        isOpen={showSettings}
+        onClose={handleSettingsClose}
+        isDark={isDark}
+        settings={settings}
+        onSettingsChange={handleSettingsChange}
+      />
     </div>
   );
 }
 
-export default App
+export default App;
