@@ -3,6 +3,7 @@ import GraphQLClient from "./components/GraphQLClient";
 import RestApiClient from "./components/RestApiClient";
 import WebSocketClient from "./components/WebSocketClient";
 import Settings from "./components/Settings";
+import ResponseSection from "./components/ResponseSection";
 
 const ThemeIcon = ({ isActive, className }) => (
   <svg
@@ -173,7 +174,7 @@ function App() {
       }`}
     >
       <header className="backdrop-blur-xl transition-all duration-500">
-        <div className="flex justify-between items-center px-6 py-2">
+        <div className="flex justify-between items-center px-6 py-3">
           <p className="text-2xl font-bold">zapi</p>
           <nav className="flex space-x-2 items-center">
             {[
@@ -296,96 +297,12 @@ function App() {
       </div>
 
       {/* Response Section */}
-      <div className="flex-1 py-4 px-6">
-        <h3
-          className={`text-lg font-bold mb-4 flex items-center space-x-2 ${
-            isDark ? "text-white" : "text-[#141414]"
-          }`}
-        >
-          <span>Response</span>
-          {response && (
-            <>
-              <div
-                className={`px-3 py-1 rounded-full text-sm font-bold ${
-                  response.status >= 200 && response.status < 300
-                    ? "text-emerald-700 bg-emerald-100"
-                    : response.status >= 400
-                    ? "text-red-700 bg-red-100"
-                    : "text-indigo-700 bg-indigo-100"
-                }`}
-              >
-                {`Status: ${response.status}`}
-              </div>
-              <div className="flex gap-4 text-sm">
-                <span
-                  className={`font-bold px-3 py-1 rounded-full ${
-                    response.status >= 200 && response.status < 300
-                      ? "text-emerald-700 bg-emerald-100"
-                      : response.status >= 400
-                      ? "text-red-700 bg-red-100"
-                      : "text-indigo-700 bg-indigo-100"
-                  }`}
-                >
-                  {`Status Text: ${
-                    response.statusText ? response.statusText : "None"
-                  }`}
-                </span>
-              </div>
-            </>
-          )}
-        </h3>
-
-        {response ? (
-          <div className="space-y-4">
-            <div
-              className={`rounded-xl border p-4 transition-all duration-300 ${
-                isDark
-                  ? "bg-[#1f1f1f] border-white/10"
-                  : "bg-white border-gray-200/50"
-              }`}
-            >
-              <pre
-                className={`font-mono text-sm whitespace-pre-wrap overflow-auto max-h-32 ${
-                  isDark ? "text-gray-300" : "text-gray-700"
-                }`}
-              >
-                {typeof response.data === "string" &&
-                (response.data.startsWith("{") || response.data.startsWith("["))
-                  ? settings.autoFormat
-                    ? JSON.stringify(JSON.parse(response.data), null, 2)
-                    : response.data
-                  : response.data}
-              </pre>
-            </div>
-          </div>
-        ) : (
-          <div
-            className={`text-center py-8 rounded-xl border-2 border-dashed transition-all duration-300 ${
-              isDark
-                ? "border-white/10 text-gray-400"
-                : "border-gray-200/50 text-gray-500"
-            }`}
-          >
-            <div
-              className={`text-4xl mb-2 ${
-                isDark ? "text-white/20" : "text-gray-300"
-              }`}
-            >
-              {apiType === "rest" ? "🚀" : apiType === "graphql" ? "⚡" : "🔌"}
-            </div>
-            <p className="font-medium">
-              {apiType === "websocket"
-                ? "WebSocket support coming soon!"
-                : `Ready to launch your ${apiType.toUpperCase()} request!`}
-            </p>
-            <p className="text-sm mt-1">
-              {apiType === "websocket"
-                ? "Stay tuned for real-time communication features 🔥"
-                : "Hit that Send button to see magic happen ✨"}
-            </p>
-          </div>
-        )}
-      </div>
+      <ResponseSection
+        response={response}
+        isDark={isDark}
+        apiType={apiType}
+        settings={settings}
+      />
 
       {/* Settings Modal */}
       <Settings
